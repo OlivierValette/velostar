@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
-import {ListGroupItem} from "react-bootstrap";
+import {Badge, ListGroupItem} from "react-bootstrap";
 
 class ItemStation extends Component {
+
     render() {
         return (
-            <ListGroupItem>
-                Item
-            </ListGroupItem>
+            <ListGroupItem className="d-flex justify-content-between">
+                {this.props.station.nom}
+                <Badge bsStyle="primary" className="badge-pill">{this.props.station.nombrevelosdisponibles}</Badge>
+                </ListGroupItem>
         );
     }
 }
