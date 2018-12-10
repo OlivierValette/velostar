@@ -1,13 +1,32 @@
 import React, {Component} from 'react';
+import {ListGroup, ListGroupItem} from "react-bootstrap";
+import ItemStation from "./ItemStation";
 
 class ListeStations extends Component {
-    render() {
-        return (
-            <div>
 
-            </div>
-    )
-        ;
+    constructor(props) {
+        super(props);
+        this.state = { stations: [] };
+    }
+
+    componentDidMount() {
+        // get list of stations in state through API (https://data.rennesmetropole.fr/)
+        fetch ('https://data.rennesmetropole.fr/api/records/1.0/search/?dataset=etat-des-stations-le-velo-star-en-temps-reel&facet=nom&facet=etat&facet=nombreemplacementsactuels&facet=nombreemplacementsdisponibles&facet=nombrevelosdisponibles')
+            .then(response => response.json())
+            .then(data => this.setState({stations: data.records}))
+    }
+
+    render() {
+
+        const items = this.state.stations.map( station => <ItemStation key={station.fields.idstation} station={station.fields}/> );
+
+        return (
+            <ListGroup>
+                <ListGroupItem>
+                    {items}
+                </ListGroupItem>
+            </ListGroup>
+        );
     }
 }
 

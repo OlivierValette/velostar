@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
+import {ListGroupItem} from "react-bootstrap";
 
 class ItemStation extends Component {
     render() {
         return (
-            <div>
-                
-            </div>
+            <ListGroupItem>
+                Item
+            </ListGroupItem>
         );
     }
 }
