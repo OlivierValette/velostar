@@ -9,6 +9,18 @@ class CardStation extends Component {
     }
 
     componentDidMount() {
+        // get info from station with id idStation
+        this.loadStation();
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        // get station info if an idStation change occurred
+        if (this.props.idStation !== prevProps.idStation) {
+            this.loadStation();
+        }
+    }
+
+    loadStation() {
         // get station info through API (https://data.rennesmetropole.fr/)
         fetch ('https://data.rennesmetropole.fr/api/records/1.0/search/?dataset=etat-des-stations-le-velo-star-en-temps-reel&q=idstation%3D'
             + this.props.idStation
@@ -31,13 +43,13 @@ class CardStation extends Component {
             < div className="container">
                 <Panel>
                     <Panel.Heading>{this.state.station.nom}</Panel.Heading>
-                    <Panel.Body>Some default panel content here.</Panel.Body>
+                    <Panel.Body>Etat de la station : {this.state.station.etat}</Panel.Body>
                     <ListGroup>
-                        <ListGroupItem>Item 1</ListGroupItem>
-                        <ListGroupItem>Item 2</ListGroupItem>
-                        <ListGroupItem>&hellip;</ListGroupItem>
+                        <ListGroupItem>Nombre de vélos disponibles : {this.state.station.nombrevelosdisponibles}</ListGroupItem>
+                        <ListGroupItem>Nombre d'emplacements disponibles : {this.state.station.nombreemplacementsdisponibles}</ListGroupItem>
+                        <ListGroupItem>Coordonnées : {this.state.station.coordonnees[0]} - {this.state.station.coordonnees[1]}</ListGroupItem>
                     </ListGroup>
-                    <Panel.Body>Some more panel content here.</Panel.Body>
+                    <Panel.Body>{this.state.station.idstation}. (mise à jour : {this.state.station.lastupdate})</Panel.Body>
                 </Panel>
             </div>
         );
